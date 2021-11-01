@@ -39,6 +39,7 @@ export default ({ style, page, setPage }: any) => {
     const [columns, setColumns] = useState(columnsFromBackend)
     const [showModal, setShowModal] = useState(false)
     const [showError, setShowError] = useState(false)
+    const [canRun, setCanRun] = useState(false)
 
     const { inProgress, send } = useAPI("https://dockerdemotarkogbr.azurewebsites.net/api/")
 
@@ -74,11 +75,11 @@ export default ({ style, page, setPage }: any) => {
                                     }
                                 }
                                 setColumns(tmp_columns)
-
+                                setCanRun(true)
                             }}>Embedding-ek generálása</Button>
                         </Row>
                         <Row>
-                            <Button onClick={() => {
+                            <Button disabled={!canRun} onClick={() => {
                                 let extractedData = extractVectors(columns, parseFloat(threshold))
                                 if (!extractedData) {
                                     setShowError(true)
