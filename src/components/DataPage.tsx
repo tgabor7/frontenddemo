@@ -40,14 +40,14 @@ export default ({ style, page, setPage }: any) => {
     const [showModal, setShowModal] = useState(false)
     const [showError, setShowError] = useState(false)
 
-    const { inProgress, get, send } = useAPI()
+    const { inProgress, send } = useAPI("https://dockerdemotarkogbr.azurewebsites.net/api/")
 
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
     return (<>
         <div style={{ ...styles.container, ...style }}>
-            <MessageModal show={showModal} handleClose={handleClose} event={()=>{setPage(1)}} />
+            <MessageModal show={showModal} loading={inProgress} handleClose={handleClose} event={()=>{setPage(1)}} />
             <ErrorModal title="Hiba" message="Nem lehetnek üres csoportok!" show={showError} handleClose={() => { setShowError(false) }} />
             {page === 0 ? <Container>
                 <Row>
@@ -86,8 +86,7 @@ export default ({ style, page, setPage }: any) => {
                                 }
                                 handleShow()
 
-                                send(extractVectors(columns, parseFloat(threshold))).then((response) => {
-                                })
+                                send(extractVectors(columns, parseFloat(threshold)))
                             }}>Újra klaszterezés futtatása</Button>
                         </Row>
                     </Col>

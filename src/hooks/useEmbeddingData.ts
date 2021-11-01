@@ -1,5 +1,9 @@
 import { useState } from "react"
 
+/*
+    Ez a hook a kezdeti adaok előállítására szolgál
+*/
+
 export default () => {
     const [embeddings, setEmbeddings] = useState<number[][]>([])
     const [loading, setLoading] = useState(false)

@@ -1,17 +1,24 @@
 import { useState } from "react"
 import axios, { AxiosResponse } from "axios"
 
-export default ()=>{
+/*
+    Ez a hook elküldi a csoportak feldolgozásra a backendnek.
+*/
+
+export default (url: string)=>{
     
-    const url = "http://localhost:4000/"
-
     const [inProgress, setInProgress] = useState<boolean>(false)
+    const [data, setData] = useState<any>()
+    const [error, setError] = useState('')
 
-    const send : ((data: any) => Promise<AxiosResponse<any, any>>)= (data: any)=>{
-        return axios.post(url, data)
+    const send = (data: any)=>{
+        setInProgress(true)
+        axios.post(url, data).then((res:AxiosResponse)=>{
+            setData(res.data)
+            setInProgress(false)
+        }).catch(err=>{
+            setError(err)
+        })
     }
-    const get = ()=>{
-        return axios.get(url)
-    }
-    return {inProgress, get, send}
+    return {inProgress, data, send}
 }

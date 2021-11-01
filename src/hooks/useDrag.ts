@@ -1,3 +1,8 @@
+
+/*
+    Drag and drop megvalósításához szükséges függvények
+*/
+
 const extractVectors = (columns: any, threshold: number) => {
 
     let result: any = {
